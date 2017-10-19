@@ -78,7 +78,7 @@ def sc_delta(T, h):
     info = fsolve(bcs_th, 0.7, args=(T, h), full_output=True)
 
     if info[2] == 1:
-        return info[0]
+        return info[0][0]
     else:
         return 0
 
