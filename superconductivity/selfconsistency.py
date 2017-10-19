@@ -75,7 +75,7 @@ def sc_delta(T, h):
 
       All energies are in Delta_00 units
     '''
-    info = fsolve(bcs_th, 0.7, aux=(T, h), full_output=True)
+    info = fsolve(bcs_th, 0.7, args=(T, h), full_output=True)
 
     if info[2] == 1:
         return info[0]
