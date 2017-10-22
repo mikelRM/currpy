@@ -1,8 +1,9 @@
-import numpy as np
+import scipy
 from scipy.optimize import fsolve
 
+import numpy as np
 
-def bcs_t(Delta, T, niter=100):
+def _bcs_t(Delta, T, niter=100):
     '''
     This function computes the BCS order parameter given Delta and T.
     niter is the number of terms that are summed in the loop. Unless 
@@ -24,7 +25,7 @@ def bcs_t(Delta, T, niter=100):
 
 
 
-def bcs_th(Delta, T, h, niter=100):
+def _bcs_th(Delta, T, h, niter=100):
     '''
     This function computes the BCS order parameter given Delta,
     T and h. niter is the number of terms that are summed in the loop. 
@@ -36,7 +37,7 @@ def bcs_th(Delta, T, h, niter=100):
         T      --> T / T_c
         h      --> h / T_c
     '''
-    info = fsolve(bcs_t, 0.7, args=(T), full_output=1)
+    info = fsolve(_bcs_t, 0.7, args=(T), full_output=1)
     if info[2] != 1:
         Delta0 = 0
         return Delta       #This way, finding the root sets Delta=0
@@ -64,7 +65,7 @@ def template_bcs_th(h, T, Delta, niter=100):
         Template to find the solutions of h for each Delta(T).
         This way I am able to print those fancy curves.
     '''
-    return BCS_full(Delta, T, h, niter)
+    return _bcs_th(Delta, T, h, niter)
 
 
 
@@ -75,7 +76,7 @@ def sc_delta(T, h):
 
       All energies are in Delta_00 units
     '''
-    info = fsolve(bcs_th, 0.7, args=(T, h), full_output=True)
+    info = fsolve(_bcs_th, 0.7, args=(T, h), full_output=True)
 
     if info[2] == 1:
         return info[0][0]
