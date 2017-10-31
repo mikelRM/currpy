@@ -87,7 +87,7 @@ class Superconductor:
                                    self.delta-self.__mu-self.__h,  self.delta-self.__mu+self.__h])
 
             
-    @T.setter
+    @Te.setter
     def Te(self, x):
         self.__Te = x
         self.delta = delta00 * sc_delta(self.__Te, self.__h)
@@ -184,7 +184,7 @@ class Superconductor:
         if self.__Te == 0:
             return np.where(E>0, 1, 0)
         else:
-            return np.where(E/self.__Te>-20, np.where(E/self.__Te<20, 1/(1+np.exp(E/self.__Te)), 0), 1)
+            return np.where(E/self.__Te>-2, np.where(E/self.__Te<2, 1/(1+np.exp(E/self.__Te)), 0), 1)
 
 
     def ep_qdot():
@@ -213,7 +213,7 @@ class Normal:
     def mu(self, x):
         self.__mu = x
     
-    @T.setter
+    @Te.setter
     def Te(self, x):
         self.__Te = x
 
@@ -265,6 +265,6 @@ class Normal:
         if self.__Te == 0:
             return np.where(E>0, 1, 0)
         else:
-            return np.where(E/self.__Te>-20, np.where(E/self.__Te<20, 1/(1+np.exp(E/self.__Te)), 0), 1)
+            return np.where(E/self.__Te>-2, np.where(E/self.__Te<2, 1/(1+np.exp(E/self.__Te)), 0), 1)
 
         
