@@ -20,8 +20,9 @@ def _bcs_t(Delta, T, niter=100):
     aux_sum = np.sum(-T / np.sqrt( ((i-0.5)*T)**2 + Delta**2 ))
     
     niter_aux = (niter*T)**2 + Delta**2
-    return aux_sum + np.log(2*np.exp(0.577215664)) + np.log(niter*T + np.sqrt(niter_aux)) + \
-             (1/24)*(niter*T**3 / (niter_aux**(1.5)))
+    return aux_sum + np.log(2*np.exp(0.577215664)) \
+        + np.log(niter*T + np.sqrt(niter_aux)) \
+        + (1/24)*(niter*T**3 / (niter_aux**(1.5)))
 
 
 
@@ -59,15 +60,12 @@ def _bcs_th(Delta, T, h, niter=100):
     return np.sum(0.5 * (1/xip + 1/xim) - 1/xi0).real
 
 
-
-def template_bcs_th(h, T, Delta, niter=100):
+def _template_bcs_th(h, T, Delta, niter=100):
     '''
         Template to find the solutions of h for each Delta(T).
         This way I am able to print those fancy curves.
     '''
     return _bcs_th(Delta, T, h, niter)
-
-
 
 
 def sc_delta(T, h):
@@ -82,6 +80,19 @@ def sc_delta(T, h):
         return info[0][0]
     else:
         return 0
+
+def sc_h(T, Delta):
+    '''
+    Returns the value of h(T, Delta). Useful to find double possible 
+    values of Delta(T,h).
+    
+    All energies are in Delta_00 units
+    '''
+    info = fsolve(_template_bcs_th, 0.0, args=(T,Delta), full_output=True)
+    if info[2] == 1:
+        return info[0][0]
+    else:
+        raise 0
 
 
 
