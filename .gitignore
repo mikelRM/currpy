@@ -1,5 +1,2 @@
-#Spyder autogenerations
-.spyderproject
-.spyderworkspace
-
-#Dropbox
+#Ignore all hidden files
+.*
