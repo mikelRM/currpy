@@ -1,2 +1,6 @@
 #Ignore all hidden files
 .*
+build/*
+dist/*
+theory/*
+currpy.egg-info/*
